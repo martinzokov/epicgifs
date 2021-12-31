@@ -1,0 +1,12 @@
+[programs.devnet]
+epicgifs = "BDL2NBBAoeU9ua45dhCBrywzF1Y9XK1EjjMrA13jiQtj"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "devnet"
+wallet = "/Users/martin.zokov/.config/solana/id.json"
+
+[scripts]
+test = "node tests/epicgifs.js"
