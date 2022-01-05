@@ -14,6 +14,11 @@ pub mod epicgifs {
     }
 
     pub fn add_gif(ctx: Context<AddGif>, gif_link: String) -> ProgramResult {
+        
+        if !gif_link.contains("giphy.com") && !gif_link.contains("https://") {
+            return Err(ProgramError::InvalidArgument);
+        }
+
         let base_account = &mut ctx.accounts.base_account;
         let user = &mut ctx.accounts.user;
 
@@ -33,9 +38,9 @@ pub mod epicgifs {
 
         let gif_index = base_account.gif_list.iter().position(|r| r.gif_link == gif_link).unwrap();
 
-        let item = &mut base_account.gif_list[gifIndex];
+        let item = &mut base_account.gif_list[gif_index];
 
-        if (upvote) {
+        if upvote {
             item.votes += 1;
         } else {
             item.votes -= 1;

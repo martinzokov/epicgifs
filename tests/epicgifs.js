@@ -26,7 +26,10 @@ const main = async() => {
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('GIF Count', account.totalGifs.toString());
 
-  await program.rpc.addGif("giphy_link", {
+  const giphy1 = "https://giphy.com/somegif"
+  const giphy2 = "https://giphy.com/somegif2"
+
+  await program.rpc.addGif(giphy1, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
@@ -38,19 +41,19 @@ const main = async() => {
 
   console.log(' GIF List', account.gifList);
 
-  await program.rpc.updateItem("giphy_link", true, {
+  await program.rpc.updateItem(giphy1, true, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
     },
   })
-  await program.rpc.updateItem("giphy_link", true, {
+  await program.rpc.updateItem(giphy1, true, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
     },
   })
-  await program.rpc.updateItem("giphy_link", false, {
+  await program.rpc.updateItem(giphy1, false, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
@@ -58,15 +61,15 @@ const main = async() => {
   })
 
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log(' GIF vote count', account.gifList.filter(g=>g.gifLink==="giphy_link")[0].votes);
+  console.log(' GIF vote count', account.gifList.filter(g=>g.gifLink===giphy1)[0].votes);
 
-  await program.rpc.addGif("giphy_link2", {
+  await program.rpc.addGif(giphy2, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
     },
   });
-  await program.rpc.updateItem("giphy_link2", false, {
+  await program.rpc.updateItem(giphy2, false, {
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
@@ -74,7 +77,7 @@ const main = async() => {
   })
 
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log(' GIF vote count should be negative 1', account.gifList.filter(g=>g.gifLink==="giphy_link2")[0].votes);
+  console.log(' GIF vote count should be negative 1', account.gifList.filter(g=>g.gifLink===giphy2)[0].votes);
 }
 
 const runMain = async () => {
